@@ -10,7 +10,8 @@ class App extends Component {
       { name: "Manu", age: 29 },
       { name: "Stephanie", age: 26 }
     ],
-    otherState: "some other value"
+    otherState: "some other value",
+    showPersons : false
   }
 
   switchNameHandler = (newName) => {
@@ -23,6 +24,13 @@ class App extends Component {
       ]
     })
   };
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+
+    // Toggle True False
+    this.setState({showPersons : !doesShow});
+  }
 
   nameChangeHandler = (event) =>{
     this.setState({
@@ -43,6 +51,29 @@ class App extends Component {
       cursor : "pointer"
     };
 
+    // Dynamic Content
+
+    let persons = null;
+
+    if(this.state.showPersons){
+      // JSX Dynamic
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchNameHandler.bind(this, 'Max!')}
+            changed={this.nameChangeHandler}>My Hobbies is racing</Person>
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}></Person>
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi , I am react App</h1>
@@ -50,18 +81,8 @@ class App extends Component {
         <p>This is working too</p>
         <button 
           style={style}
-          onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Max!')}
-          changed={this.nameChangeHandler}>My Hobbies is racing</Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}></Person>
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          {persons}
       </div>
     );
   }
