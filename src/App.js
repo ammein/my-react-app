@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import Classes from './App.css';
 import Person from './Person/Person.js';
 
 class App extends Component {
@@ -105,7 +105,7 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      <div className={Classes.App}>
         <h1>Hi , I am react App</h1>
         <p>Test Web App</p>
         <p className={classes.join(" ")}>This is working too</p>
