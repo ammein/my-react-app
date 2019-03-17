@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Classes from './App.css';
 import Person from './Person/Person.js';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -59,18 +60,10 @@ class App extends Component {
   }
 
   render () {
-    const style = {
-      backgroundColor: "green",
-      color : "white",
-      font : "inherit",
-      border : "1px solid blue",
-      padding : "8px",
-      cursor : "pointer"
-    };
-
     // Dynamic Content
-
     let persons = null;
+
+    let btnClass = '';
 
     if(this.state.showPersons){
       // JSX Dynamic
@@ -80,18 +73,18 @@ class App extends Component {
             // Convert to array using .map()
             this.state.persons.map((person , index) => {
               // Return JSX Person
-              return <Person 
-                click={this.deletePersonHandler.bind(this , index)}
-                name={person.name} 
-                age={person.age}
-                key={index}
-                changed={(event)=>this.nameChangeHandler(event, person.id)} />
+              return <ErrorBoundary key={person.id}><Person 
+                  click={this.deletePersonHandler.bind(this , index)}
+                  name={person.name} 
+                  age={person.age}
+                  key={index}
+                  changed={(event)=>this.nameChangeHandler(event, person.id)} /></ErrorBoundary>
             })
           }
         </div>
       );
 
-      style.backgroundColor = "red";
+      btnClass = Classes.Red;
     }
 
     const classes = []; // "red bold"
@@ -110,7 +103,7 @@ class App extends Component {
         <p>Test Web App</p>
         <p className={classes.join(" ")}>This is working too</p>
         <button 
-          style={style}
+          className={btnClass}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
           {persons}
       </div>
