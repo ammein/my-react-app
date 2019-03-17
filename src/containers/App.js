@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Classes from './App.css';
-import Person from './Person/Person.js';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
   state = {
     persons: [
-      { id:"adsa123", name: "Max", age: 28 },
-      { id : "1eaegw", name: "Manu", age: 29 },
-      { id : "asf1t", name: "Stephanie", age: 26 }
+      { id :"adsa123", name : "Max", age : 28 },
+      { id : "1eaegw", name : "Manu", age : 29 },
+      { id : "asf1t", name : "Stephanie", age : 26 }
     ],
     otherState: "some other value",
     showPersons : false
@@ -63,49 +63,26 @@ class App extends Component {
     // Dynamic Content
     let persons = null;
 
-    let btnClass = '';
 
     if(this.state.showPersons){
       // JSX Dynamic
       persons = (
         <div>
-          {
-            // Convert to array using .map()
-            this.state.persons.map((person , index) => {
-              // Return JSX Person
-              return <ErrorBoundary key={person.id}><Person 
-                  click={this.deletePersonHandler.bind(this , index)}
-                  name={person.name} 
-                  age={person.age}
-                  key={index}
-                  changed={(event)=>this.nameChangeHandler(event, person.id)} /></ErrorBoundary>
-            })
-          }
+          <Persons 
+          persons={this.state.persons} 
+          clicked={this.deletePersonHandler} 
+          changed={this.nameChangeHandler} />
         </div>
       );
-
-      btnClass = Classes.Red;
-    }
-
-    const classes = []; // "red bold"
-
-    if(this.state.persons.length <= 2){
-      classes.push("red");
-    }
-
-    if(this.state.persons.length <=1){
-      classes.push("bold");
     }
 
     return (
       <div className={Classes.App}>
-        <h1>Hi , I am react App</h1>
-        <p>Test Web App</p>
-        <p className={classes.join(" ")}>This is working too</p>
-        <button 
-          className={btnClass}
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
-          {persons}
+        <Cockpit
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}/>
+        {persons}        
       </div>
     );
   }
