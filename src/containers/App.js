@@ -5,14 +5,27 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = {
-    persons: [
-      { id :"adsa123", name : "Max", age : 28 },
-      { id : "1eaegw", name : "Manu", age : 29 },
-      { id : "asf1t", name : "Stephanie", age : 26 }
-    ],
-    otherState: "some other value",
-    showPersons : false
+  constructor(props){
+    super(props);
+    console.log("[App.js] constructor");
+    this.state = {
+      persons: [
+        { id: "adsa123", name: "Max", age: 28 },
+        { id: "1eaegw", name: "Manu", age: 29 },
+        { id: "asf1t", name: "Stephanie", age: 26 }
+      ],
+      otherState: "some other value",
+      showPersons: false
+    }
+  }
+
+  static getDerivedStateFromProps(props ,state){
+    console.log("[App.js] getDerivedStateFromProps" , props);
+    return state;
+  }
+
+  componentDidMount(){
+    console.log("[App.js] ComponentDidMount");
   }
 
   deletePersonHandler = (index) =>{
@@ -60,6 +73,8 @@ class App extends Component {
   }
 
   render () {
+
+    console.log("[App.js] render");
     // Dynamic Content
     let persons = null;
 
@@ -79,6 +94,7 @@ class App extends Component {
     return (
       <div className={Classes.App}>
         <Cockpit
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}/>
