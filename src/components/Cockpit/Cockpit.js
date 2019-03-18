@@ -1,7 +1,22 @@
-import React from 'react';
+import React , { useEffect } from 'react';
 import Classes from './Cockpit.less';
 
 const cockpit = (props) => {
+    // useEffect here
+    useEffect(() => {
+      console.log("[Cockpit.js] useEffect");
+      // Http request...
+      const timer = setTimeout(() => {
+          alert('Saved data to cloud !');
+      }, 1000);
+
+      // Clean up work
+      return () =>{
+          clearTimeout(timer);
+          console.log("[Cockpit.js] cleanup work in useEffect");
+      }
+    }, []);
+
     const classes = []; // "red bold"
     let btnClass = '';
 
