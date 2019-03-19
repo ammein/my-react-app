@@ -1,23 +1,28 @@
-import React , { Component } from 'react';
+import React , { PureComponent } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Person from './Person/Person.js';
 
 // One line JS code -> const persons = (props) => ();
-class Persons extends Component { 
+class Persons extends PureComponent { 
 
     // static getDerivedStateFromProps(props , state){
     //     console.log("[Persons.js] getDerivedStateFromProps");
     //     return state;
     // }
 
-    shouldComponentUpdate(nextProps , nextState){
-        console.log("[Persons.js] shouldComponentUpdate");
-        if(nextProps.persons !== this.props.persons){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    // shouldComponentUpdate(nextProps , nextState){
+    //     console.log("[Persons.js] shouldComponentUpdate");
+    //     // it looks on nextProps that refers to a newPointer
+    //     if(
+    //         nextProps.persons !== this.props.persons || 
+    //         nextProps.changed !== this.props.changed || 
+    //         nextProps.clicked
+    //     ){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
     getSnapshotBeforeUpdate(prevProps , prevState){
         console.log("[Persons.js] getSnapshotBeforeUpdate");
