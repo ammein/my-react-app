@@ -1,7 +1,10 @@
-import React , { useEffect } from 'react';
+import React , { useEffect , useRef } from 'react';
 import Classes from './Cockpit.less';
 
 const cockpit = (props) => {
+
+    const toggleBtnRef = useRef();
+
     // useEffect here
     useEffect(() => {
       console.log("[Cockpit.js] useEffect");
@@ -9,6 +12,9 @@ const cockpit = (props) => {
       const timer = setTimeout(() => {
           alert('Saved data to cloud !');
       }, 1000);
+
+      // After all DOM mount just like `componentDidMount`
+        toggleBtnRef.current.click();
 
       // Clean up work
       return () =>{
@@ -33,12 +39,14 @@ const cockpit = (props) => {
         classes.push("bold");
     }
 
+
     return (
         <div className={Classes.Cockpit}>
             <h1>{props.title}</h1>
             <p>Test Web App</p>
             <p className={classes.join(" ")}>This is working too</p>
             <button
+                ref={toggleBtnRef}
                 className={btnClass}
                 onClick={props.clicked}>Toggle Persons</button>
         </div>

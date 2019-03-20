@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Classes from './App.css';
 import Persons from '../components/Persons/Persons.js';
 import Cockpit from '../components/Cockpit/Cockpit.js';
-import WithClass from '../HOC/WithClass';
+import withClass from '../HOC/withClass';
+import Aux from '../HOC/Auxiliary';
 
 class App extends Component {
 
@@ -17,7 +18,8 @@ class App extends Component {
       ],
       otherState: "some other value",
       showPersons: false,
-      showCockpit : true
+      showCockpit : true,
+      changeCounter : 0
     }
   }
 
@@ -79,8 +81,13 @@ class App extends Component {
     // Update person into new array copy
     persons[personIndex] = person;
 
-    // Use Set State normally
-    this.setState({persons : persons});
+    // Use Set State Anonymous function to successfull update state
+    this.setState( (prevState , props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
   }
 
   render () {
@@ -103,7 +110,7 @@ class App extends Component {
     }
 
     return (
-      <WithClass classes={Classes.App}>
+      <Aux>
         <button onClick={() => {
           this.setState({
             showCockpit : false
@@ -118,9 +125,9 @@ class App extends Component {
           clicked={this.togglePersonsHandler}/> : null
         }
         {persons}        
-      </WithClass>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App , Classes.App);
